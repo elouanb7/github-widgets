@@ -38,7 +38,7 @@ export default function Home() {
   const [langsCount, setLangsCount] = useState("5");
   const [layout, setLayout] = useState<"compact" | "normal">("compact");
   const [borderRadius, setBorderRadius] = useState(4.5);
-  const [baseUrl, setBaseUrl] = useState("https://your-domain.vercel.app");
+  const [baseUrl, setBaseUrl] = useState("https://github-widgets.elouanb7.com");
 
   useEffect(() => {
     setBaseUrl(window.location.origin);

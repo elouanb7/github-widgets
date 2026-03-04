@@ -6,7 +6,7 @@ Self-hosted GitHub stats widgets for your README. Generate beautiful SVG cards s
 
 | Stats Card | Languages Card |
 |:---:|:---:|
-| ![Stats](https://github-widgets-ten.vercel.app/api/stats?username=octocat&theme=dark) | ![Languages](https://github-widgets-ten.vercel.app/api/languages?username=octocat&theme=dark&layout=compact) |
+| ![Stats](https://github-widgets.elouanb7.com/api/stats?username=octocat&theme=dark) | ![Languages](https://github-widgets.elouanb7.com/api/languages?username=octocat&theme=dark&layout=compact) |
 
 ## Features
 
