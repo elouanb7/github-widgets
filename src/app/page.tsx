@@ -54,8 +54,8 @@ export default function Home() {
     ? `/api/languages?username=${validUsername}&theme=${theme}&langs_count=${langsCountNum}&layout=${layout}&border_radius=${borderRadius}`
     : "";
 
-  const statsMarkdown = `![GitHub Stats](${baseUrl}${statsPath})`;
-  const langsMarkdown = `![Top Languages](${baseUrl}${langsPath})`;
+  const statsMarkdown = `<img align="top" width="390px" src="${baseUrl}${statsPath}" alt="GitHub Stats"/>`;
+  const langsMarkdown = `<img align="top" width="400px" src="${baseUrl}${langsPath}" alt="Top Languages"/>`;
 
   return (
     <div style={{ minHeight: "100vh", background: "#0d1117", color: "#c9d1d9", fontFamily: "'Segoe UI', Ubuntu, sans-serif" }}>
