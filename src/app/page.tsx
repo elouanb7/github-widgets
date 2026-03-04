@@ -253,6 +253,8 @@ export default function Home() {
                   ["bg_color", "", "Override background color (hex)"],
                   ["icon_color", "", "Override icon color (hex)"],
                   ["border_color", "", "Override border color (hex)"],
+                  ["width", "", "Override card width in pixels (100-1000)"],
+                  ["height", "", "Override card height in pixels (50-1000)"],
                 ].map(([param, def, desc]) => (
                   <tr key={param} style={{ borderBottom: "1px solid #21262d" }}>
                     <td style={{ padding: "10px 12px", fontFamily: "monospace", color: "#58a6ff" }}>{param}</td>

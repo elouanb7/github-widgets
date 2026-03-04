@@ -55,6 +55,8 @@ export function buildCacheKey(
     "icon_color",
     "border_color",
     "border_radius",
+    "width",
+    "height",
   ];
   const parts = relevant.map((k) => `${k}=${params.get(k) ?? ""}`).join("&");
   return `${cardType}:${username.toLowerCase()}:${isPrivate ? "private" : "public"}:${parts}`;

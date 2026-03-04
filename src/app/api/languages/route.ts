@@ -59,6 +59,8 @@ export async function GET(request: NextRequest) {
     const theme = resolveTheme(searchParams);
 
     const borderRadius = Math.min(50, Math.max(0, parseFloat(searchParams.get("border_radius") ?? "4.5") || 4.5));
+    const customWidth = searchParams.get("width") ? Math.min(1000, Math.max(100, parseInt(searchParams.get("width")!, 10) || 495)) : undefined;
+    const customHeight = searchParams.get("height") ? Math.min(1000, Math.max(50, parseInt(searchParams.get("height")!, 10) || 0)) : undefined;
 
     const svg = renderLanguagesCard(languages, {
       theme,
@@ -67,6 +69,8 @@ export async function GET(request: NextRequest) {
       layout,
       username,
       borderRadius,
+      customWidth,
+      customHeight,
     });
 
     svgCache.set(cacheKey, svg);

@@ -4,9 +4,10 @@ Self-hosted GitHub stats widgets for your README. Generate beautiful SVG cards s
 
 ## Preview
 
-| Stats Card | Languages Card |
-|:---:|:---:|
-| ![Stats](https://github-widgets.elouanb7.com/api/stats?username=octocat&theme=dark) | ![Languages](https://github-widgets.elouanb7.com/api/languages?username=octocat&theme=dark&layout=compact) |
+<p align="center">
+  <img align="top" width="390px" src="https://github-widgets.elouanb7.com/api/stats?username=elouanb7&theme=dark" alt="elouanb7's GitHub Stats"/>
+  <img align="top" width="400px" src="https://github-widgets.elouanb7.com/api/languages?username=elouanb7&theme=dark&layout=compact" alt="elouanb7's Top Languages"/>
+</p>
 
 ## Features
 
@@ -22,9 +23,9 @@ Self-hosted GitHub stats widgets for your README. Generate beautiful SVG cards s
 
 Replace `YOUR_DOMAIN` with your deployed URL and `YOUR_USERNAME` with your GitHub username:
 
-```markdown
-![GitHub Stats](https://YOUR_DOMAIN/api/stats?username=YOUR_USERNAME&theme=dark)
-![Top Languages](https://YOUR_DOMAIN/api/languages?username=YOUR_USERNAME&theme=dark&layout=compact)
+```html
+<img align="top" width="390px" src="https://YOUR_DOMAIN/api/stats?username=YOUR_USERNAME&theme=dark" alt="GitHub Stats"/>
+<img align="top" width="400px" src="https://YOUR_DOMAIN/api/languages?username=YOUR_USERNAME&theme=dark&layout=compact" alt="Top Languages"/>
 ```
 
 ## Deploy Your Own
@@ -99,6 +100,8 @@ GET /api/languages?username=octocat
 | `bg_color` | — | Override background color (hex without #) |
 | `icon_color` | — | Override icon color (hex without #) |
 | `border_color` | — | Override border color (hex without #) |
+| `width` | `390`/`495` | Custom card width in pixels (100-1000) |
+| `height` | *auto* | Custom card height in pixels (50-1000) |
 
 ### Languages-Specific Parameters
 

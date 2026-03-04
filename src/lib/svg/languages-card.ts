@@ -10,25 +10,27 @@ interface LanguagesCardOptions {
   layout?: "compact" | "normal";
   username?: string;
   borderRadius?: number;
+  customWidth?: number;
+  customHeight?: number;
 }
 
 export function renderLanguagesCard(
   languages: LanguageStat[],
   options: LanguagesCardOptions
 ): string {
-  const { theme, hideBorder, hideTitle, layout = "compact", username = "", borderRadius } = options;
+  const { theme, hideBorder, hideTitle, layout = "compact", username = "", borderRadius, customWidth, customHeight } = options;
 
   if (layout === "normal") {
-    return renderNormalLayout(languages, { theme, hideBorder, hideTitle, username, borderRadius });
+    return renderNormalLayout(languages, { theme, hideBorder, hideTitle, username, borderRadius, customWidth, customHeight });
   }
-  return renderCompactLayout(languages, { theme, hideBorder, hideTitle, username, borderRadius });
+  return renderCompactLayout(languages, { theme, hideBorder, hideTitle, username, borderRadius, customWidth, customHeight });
 }
 
 function renderCompactLayout(
   languages: LanguageStat[],
-  options: { theme: Theme; hideBorder?: boolean; hideTitle?: boolean; username: string; borderRadius?: number }
+  options: { theme: Theme; hideBorder?: boolean; hideTitle?: boolean; username: string; borderRadius?: number; customWidth?: number; customHeight?: number }
 ): string {
-  const { theme, hideBorder, hideTitle, username, borderRadius } = options;
+  const { theme, hideBorder, hideTitle, username, borderRadius, customWidth, customHeight } = options;
 
   const barWidth = 435;
   const barY = 20;
@@ -78,8 +80,8 @@ function renderCompactLayout(
 
   return renderCard(
     {
-      width: 495,
-      height: cardHeight,
+      width: customWidth ?? 495,
+      height: customHeight ?? cardHeight,
       title: username ? `${username}'s Top Languages` : "Top Languages",
       theme,
       hideBorder,
@@ -92,9 +94,9 @@ function renderCompactLayout(
 
 function renderNormalLayout(
   languages: LanguageStat[],
-  options: { theme: Theme; hideBorder?: boolean; hideTitle?: boolean; username: string; borderRadius?: number }
+  options: { theme: Theme; hideBorder?: boolean; hideTitle?: boolean; username: string; borderRadius?: number; customWidth?: number; customHeight?: number }
 ): string {
-  const { theme, hideBorder, hideTitle, username, borderRadius } = options;
+  const { theme, hideBorder, hideTitle, username, borderRadius, customWidth, customHeight } = options;
 
   const rowHeight = 40;
   const startY = 15;
@@ -119,8 +121,8 @@ function renderNormalLayout(
 
   return renderCard(
     {
-      width: 495,
-      height: cardHeight,
+      width: customWidth ?? 495,
+      height: customHeight ?? cardHeight,
       title: username ? `${username}'s Top Languages` : "Top Languages",
       theme,
       hideBorder,

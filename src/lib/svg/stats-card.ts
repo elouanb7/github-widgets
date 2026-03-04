@@ -9,6 +9,8 @@ interface StatsCardOptions {
   hideTitle?: boolean;
   hide?: string[];
   borderRadius?: number;
+  customWidth?: number;
+  customHeight?: number;
 }
 
 interface StatItem {
@@ -22,7 +24,7 @@ export function renderStatsCard(
   stats: UserStats,
   options: StatsCardOptions
 ): string {
-  const { theme, hideBorder, hideTitle, hide = [], borderRadius } = options;
+  const { theme, hideBorder, hideTitle, hide = [], borderRadius, customWidth, customHeight } = options;
 
   const allStats: StatItem[] = [
     { icon: icons.star, label: "Total Stars", value: stats.totalStars, key: "stars" },
@@ -57,8 +59,8 @@ export function renderStatsCard(
 
   return renderCard(
     {
-      width: 390,
-      height: cardHeight,
+      width: customWidth ?? 390,
+      height: customHeight ?? cardHeight,
       title: `${stats.username}'s GitHub Stats`,
       theme,
       hideBorder,
