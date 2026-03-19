@@ -56,7 +56,7 @@ export default function Home() {
     : "";
 
   const statsMarkdown = `<img align="top" width="390px" src="${baseUrl}${statsPath}" alt="GitHub Stats"/>`;
-  const langsMarkdown = `<img align="top" width="495px" src="${baseUrl}${langsPath}" alt="Top Languages"/>`;
+  const langsMarkdown = `<img align="top" width="450px" src="${baseUrl}${langsPath}" alt="Top Languages"/>`;
 
   return (
     <div style={{ minHeight: "100vh", background: "#0d1117", color: "#c9d1d9", fontFamily: "'Segoe UI', Ubuntu, sans-serif" }}>
@@ -209,13 +209,13 @@ export default function Home() {
               Enter a GitHub username above to see the preview
             </div>
           ) : (
-            <div style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
-              <div style={{ flex: "41 1 0%", minWidth: 0 }}>
+            <div style={{ display: "flex", gap: 5, alignItems: "flex-start", maxWidth: 845, margin: "0 auto" }}>
+              <div style={{ flex: "390 1 0%", minWidth: 0 }}>
                 <div style={{ fontSize: 13, color: "#8b949e", marginBottom: 8, fontWeight: 500 }}>Stats Card</div>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={statsPath} alt="GitHub Stats" style={{ width: "100%", borderRadius: 4 }} />
               </div>
-              <div style={{ flex: "59 1 0%", minWidth: 0 }}>
+              <div style={{ flex: "450 1 0%", minWidth: 0 }}>
                 <div style={{ fontSize: 13, color: "#8b949e", marginBottom: 8, fontWeight: 500 }}>Top Languages</div>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={langsPath} alt="Top Languages" style={{ width: "100%", borderRadius: 4 }} />
