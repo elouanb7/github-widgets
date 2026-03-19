@@ -40,9 +40,14 @@ export default function Home() {
   const [borderRadius, setBorderRadius] = useState(4.5);
   const [themeColors, setThemeColors] = useState(false);
   const [baseUrl, setBaseUrl] = useState("https://github-widgets.elouanb7.com");
+  const [usersCount, setUsersCount] = useState<number | null>(null);
 
   useEffect(() => {
     setBaseUrl(window.location.origin);
+    fetch("/api/users-count")
+      .then((r) => r.json())
+      .then((d) => { if (d.count != null) setUsersCount(d.count); })
+      .catch(() => {});
   }, []);
 
   const validUsername = username.trim();
@@ -60,7 +65,37 @@ export default function Home() {
 
   return (
     <div style={{ minHeight: "100vh", background: "#0d1117", color: "#c9d1d9", fontFamily: "'Segoe UI', Ubuntu, sans-serif" }}>
-      <div style={{ maxWidth: 960, margin: "0 auto", padding: "48px 24px" }}>
+      <div style={{ maxWidth: 960, margin: "0 auto", padding: "48px 24px", position: "relative" }}>
+
+        {/* Top bar: counter + star */}
+        <div style={{ position: "absolute", top: 16, right: 24, display: "flex", alignItems: "center", gap: 10 }}>
+          {usersCount !== null && usersCount > 0 && (
+            <div style={{
+              display: "flex", alignItems: "center", gap: 6,
+              background: "#161b22", border: "1px solid #30363d", borderRadius: 20,
+              padding: "6px 14px", fontSize: 13, color: "#8b949e",
+            }}>
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="#8b949e"><path d="M2 5.5a3.5 3.5 0 1 1 5.898 2.549 5.508 5.508 0 0 1 3.034 4.084.75.75 0 1 1-1.482.235 4.001 4.001 0 0 0-7.9 0 .75.75 0 0 1-1.482-.236A5.507 5.507 0 0 1 3.102 8.05 3.493 3.493 0 0 1 2 5.5zM11 4a.75.75 0 1 0 0 1.5 1.5 1.5 0 0 1 .666 2.844.75.75 0 0 0-.416.672v.352a.75.75 0 0 0 .574.73c1.2.289 2.162 1.2 2.522 2.372a.75.75 0 1 0 1.434-.44 5.01 5.01 0 0 0-2.56-3.012A3 3 0 0 0 11 4z"/></svg>
+              <span style={{ color: "#f0f6fc", fontWeight: 600 }}>{usersCount}</span>
+              <span>{usersCount === 1 ? "user" : "users"}</span>
+            </div>
+          )}
+          <a
+            href="https://github.com/elouanb7/github-widgets"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "flex", alignItems: "center", gap: 6,
+              background: "#21262d", border: "1px solid #30363d", borderRadius: 20,
+              padding: "6px 14px", fontSize: 13, color: "#c9d1d9", textDecoration: "none",
+              fontWeight: 500, transition: "all 0.15s",
+            }}
+          >
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="#e3b341"><path d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25z"/></svg>
+            Star
+          </a>
+        </div>
+
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: 48 }}>
           <h1 style={{ fontSize: 40, fontWeight: 800, color: "#f0f6fc", margin: 0, letterSpacing: -1 }}>
