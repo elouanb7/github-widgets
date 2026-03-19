@@ -55,8 +55,8 @@ export default function Home() {
     ? `/api/languages?username=${validUsername}&theme=${theme}&langs_count=${langsCountNum}&layout=${layout}&border_radius=${borderRadius}${themeColors ? "&theme_colors=true" : ""}`
     : "";
 
-  const statsMarkdown = `<img align="top" width="390px" src="${baseUrl}${statsPath}" alt="GitHub Stats"/>`;
-  const langsMarkdown = `<img align="top" width="450px" src="${baseUrl}${langsPath}" alt="Top Languages"/>`;
+  const statsMarkdown = `<img align="top" width="364px" src="${baseUrl}${statsPath}" alt="GitHub Stats"/>`;
+  const langsMarkdown = `<img align="top" width="476px" src="${baseUrl}${langsPath}" alt="Top Languages"/>`;
 
   return (
     <div style={{ minHeight: "100vh", background: "#0d1117", color: "#c9d1d9", fontFamily: "'Segoe UI', Ubuntu, sans-serif" }}>
@@ -210,12 +210,12 @@ export default function Home() {
             </div>
           ) : (
             <div style={{ display: "flex", gap: 5, alignItems: "flex-start", maxWidth: 845, margin: "0 auto" }}>
-              <div style={{ flex: "390 1 0%", minWidth: 0 }}>
+              <div style={{ flex: "364 1 0%", minWidth: 0 }}>
                 <div style={{ fontSize: 13, color: "#8b949e", marginBottom: 8, fontWeight: 500 }}>Stats Card</div>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={statsPath} alt="GitHub Stats" style={{ width: "100%", borderRadius: 4 }} />
               </div>
-              <div style={{ flex: "450 1 0%", minWidth: 0 }}>
+              <div style={{ flex: "476 1 0%", minWidth: 0 }}>
                 <div style={{ fontSize: 13, color: "#8b949e", marginBottom: 8, fontWeight: 500 }}>Top Languages</div>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={langsPath} alt="Top Languages" style={{ width: "100%", borderRadius: 4 }} />
