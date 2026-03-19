@@ -60,8 +60,9 @@ export default function Home() {
     ? `/api/languages?username=${validUsername}&theme=${theme}&langs_count=${langsCountNum}&layout=${layout}&border_radius=${borderRadius}${themeColors ? "&theme_colors=true" : ""}`
     : "";
 
-  const statsMarkdown = `<img align="top" width="364px" src="${baseUrl}${statsPath}" alt="GitHub Stats"/>`;
-  const langsMarkdown = `<img align="top" width="476px" src="${baseUrl}${langsPath}" alt="Top Languages"/>`;
+  const statsImgTag = `<img width="100%" src="${baseUrl}${statsPath}" alt="GitHub Stats"/>`;
+  const langsImgTag = `<img width="100%" src="${baseUrl}${langsPath}" alt="Top Languages"/>`;
+  const combinedMarkdown = `<table><tr>\n<td width="43%" valign="top">\n${statsImgTag}\n</td>\n<td width="57%" valign="top">\n${langsImgTag}\n</td>\n</tr></table>`;
 
   return (
     <div style={{ minHeight: "100vh", background: "#0d1117", color: "#c9d1d9", fontFamily: "'Segoe UI', Ubuntu, sans-serif" }}>
@@ -270,8 +271,9 @@ export default function Home() {
           }}>
             <h2 style={{ fontSize: 16, fontWeight: 600, color: "#f0f6fc", margin: "0 0 16px 0" }}>Copy for your README</h2>
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-              <CodeBlock label="Stats Card" code={statsMarkdown} />
-              <CodeBlock label="Languages Card" code={langsMarkdown} />
+              <CodeBlock label="Both Cards (responsive table)" code={combinedMarkdown} />
+              <CodeBlock label="Stats Card only" code={statsImgTag} />
+              <CodeBlock label="Languages Card only" code={langsImgTag} />
             </div>
           </div>
         )}
