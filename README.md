@@ -5,8 +5,8 @@ Self-hosted GitHub stats widgets for your README. Generate beautiful SVG cards s
 ## Preview
 
 <p align="center">
-  <img align="top" width="363" src="https://github-widgets.elouanb7.com/api/stats?username=elouanb7&theme=dark" alt="elouanb7's GitHub Stats"/>
-  <img align="top" width="477" src="https://github-widgets.elouanb7.com/api/languages?username=elouanb7&theme=dark&layout=compact" alt="elouanb7's Top Languages"/>
+  <img align="top" width="353" src="https://github-widgets.elouanb7.com/api/stats?username=elouanb7&theme=dark" alt="elouanb7's GitHub Stats"/>
+  <img align="top" width="466" src="https://github-widgets.elouanb7.com/api/languages?username=elouanb7&theme=dark&layout=compact" alt="elouanb7's Top Languages"/>
 </p>
 
 ## Features
@@ -24,8 +24,8 @@ Self-hosted GitHub stats widgets for your README. Generate beautiful SVG cards s
 Replace `YOUR_DOMAIN` with your deployed URL and `YOUR_USERNAME` with your GitHub username:
 
 ```html
-<img align="top" width="353" src="https://YOUR_DOMAIN/api/stats?username=YOUR_USERNAME&theme=dark" alt="GitHub Stats"/>
-<img align="top" width="466" src="https://YOUR_DOMAIN/api/languages?username=YOUR_USERNAME&theme=dark&layout=compact" alt="Top Languages"/>
+<img align="top" width="363" src="https://YOUR_DOMAIN/api/stats?username=YOUR_USERNAME&theme=dark" alt="GitHub Stats"/>
+<img align="top" width="477" src="https://YOUR_DOMAIN/api/languages?username=YOUR_USERNAME&theme=dark&layout=compact" alt="Top Languages"/>
 ```
 
 ## Deploy Your Own
