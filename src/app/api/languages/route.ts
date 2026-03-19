@@ -71,6 +71,7 @@ export async function GET(request: NextRequest) {
       borderRadius,
       customWidth,
       customHeight,
+      themeColors: searchParams.get("theme_colors") === "true",
     });
 
     svgCache.set(cacheKey, svg);

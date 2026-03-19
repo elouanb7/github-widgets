@@ -38,6 +38,7 @@ export default function Home() {
   const [langsCount, setLangsCount] = useState("5");
   const [layout, setLayout] = useState<"compact" | "normal">("compact");
   const [borderRadius, setBorderRadius] = useState(4.5);
+  const [themeColors, setThemeColors] = useState(false);
   const [baseUrl, setBaseUrl] = useState("https://github-widgets.elouanb7.com");
 
   useEffect(() => {
@@ -51,11 +52,11 @@ export default function Home() {
     ? `/api/stats?username=${validUsername}&theme=${theme}&border_radius=${borderRadius}`
     : "";
   const langsPath = validUsername
-    ? `/api/languages?username=${validUsername}&theme=${theme}&langs_count=${langsCountNum}&layout=${layout}&border_radius=${borderRadius}`
+    ? `/api/languages?username=${validUsername}&theme=${theme}&langs_count=${langsCountNum}&layout=${layout}&border_radius=${borderRadius}${themeColors ? "&theme_colors=true" : ""}`
     : "";
 
   const statsMarkdown = `<img align="top" width="390px" src="${baseUrl}${statsPath}" alt="GitHub Stats"/>`;
-  const langsMarkdown = `<img align="top" width="400px" src="${baseUrl}${langsPath}" alt="Top Languages"/>`;
+  const langsMarkdown = `<img align="top" width="495px" src="${baseUrl}${langsPath}" alt="Top Languages"/>`;
 
   return (
     <div style={{ minHeight: "100vh", background: "#0d1117", color: "#c9d1d9", fontFamily: "'Segoe UI', Ubuntu, sans-serif" }}>
@@ -78,11 +79,12 @@ export default function Home() {
           padding: 24,
           marginBottom: 32,
         }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "0 16px" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "0 16px" }}>
             <span style={{ fontSize: 13, fontWeight: 500, color: "#8b949e", paddingBottom: 8 }}>GitHub Username</span>
             <span style={{ fontSize: 13, fontWeight: 500, color: "#8b949e", paddingBottom: 8 }}>Languages Layout</span>
             <span style={{ fontSize: 13, fontWeight: 500, color: "#8b949e", paddingBottom: 8 }}>{`Languages Count: ${langsCount}`}</span>
             <span style={{ fontSize: 13, fontWeight: 500, color: "#8b949e", paddingBottom: 8 }}>{`Border Radius: ${borderRadius}px`}</span>
+            <span style={{ fontSize: 13, fontWeight: 500, color: "#8b949e", paddingBottom: 8 }}>Language Colors</span>
 
             <input
               value={username}
@@ -128,6 +130,24 @@ export default function Home() {
                 onChange={(e) => setBorderRadius(parseFloat(e.target.value))}
                 style={{ width: "100%", accentColor: "#58a6ff" }}
               />
+            </div>
+            <div style={{ display: "flex", gap: 8 }}>
+              {(["github", "theme"] as const).map((mode) => (
+                <button
+                  key={mode}
+                  onClick={() => setThemeColors(mode === "theme")}
+                  style={{
+                    ...pillStyle,
+                    background: (mode === "theme") === themeColors ? "#58a6ff" : "#21262d",
+                    color: (mode === "theme") === themeColors ? "#fff" : "#8b949e",
+                    border: (mode === "theme") === themeColors ? "1px solid #58a6ff" : "1px solid #30363d",
+                    height: 42,
+                    boxSizing: "border-box",
+                  }}
+                >
+                  {mode === "github" ? "GitHub" : "Theme"}
+                </button>
+              ))}
             </div>
           </div>
         </div>
@@ -190,15 +210,15 @@ export default function Home() {
             </div>
           ) : (
             <div style={{ display: "flex", gap: 20, alignItems: "flex-start" }}>
-              <div style={{ flex: "0 0 390px", maxWidth: 390 }}>
+              <div style={{ flex: "41 1 0%", minWidth: 0 }}>
                 <div style={{ fontSize: 13, color: "#8b949e", marginBottom: 8, fontWeight: 500 }}>Stats Card</div>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={statsPath} alt="GitHub Stats" style={{ width: 390, borderRadius: 4 }} />
+                <img src={statsPath} alt="GitHub Stats" style={{ width: "100%", borderRadius: 4 }} />
               </div>
-              <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ flex: "59 1 0%", minWidth: 0 }}>
                 <div style={{ fontSize: 13, color: "#8b949e", marginBottom: 8, fontWeight: 500 }}>Top Languages</div>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={langsPath} alt="Top Languages" style={{ maxWidth: "100%", borderRadius: 4 }} />
+                <img src={langsPath} alt="Top Languages" style={{ width: "100%", borderRadius: 4 }} />
               </div>
             </div>
           )}
@@ -253,6 +273,7 @@ export default function Home() {
                   ["bg_color", "", "Override background color (hex)"],
                   ["icon_color", "", "Override icon color (hex)"],
                   ["border_color", "", "Override border color (hex)"],
+                  ["theme_colors", "false", "Use theme-derived colors for languages"],
                   ["width", "", "Override card width in pixels (100-1000)"],
                   ["height", "", "Override card height in pixels (50-1000)"],
                 ].map(([param, def, desc]) => (

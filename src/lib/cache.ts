@@ -55,6 +55,7 @@ export function buildCacheKey(
     "icon_color",
     "border_color",
     "border_radius",
+    "theme_colors",
     "width",
     "height",
   ];

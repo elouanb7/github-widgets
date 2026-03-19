@@ -149,6 +149,64 @@ export const themes: Record<string, Theme> = {
   },
 };
 
+/**
+ * Generate a palette of distinct colors derived from the theme's accent colors.
+ * Used when theme_colors=true to replace GitHub's native language colors.
+ */
+export function generateThemePalette(theme: Theme, count: number): string[] {
+  const baseColors = [
+    theme.titleColor,
+    theme.iconColor,
+    theme.textColor,
+    theme.borderColor,
+  ];
+
+  function hexToHsl(hex: string): [number, number, number] {
+    const r = parseInt(hex.slice(1, 3), 16) / 255;
+    const g = parseInt(hex.slice(3, 5), 16) / 255;
+    const b = parseInt(hex.slice(5, 7), 16) / 255;
+    const max = Math.max(r, g, b), min = Math.min(r, g, b);
+    const l = (max + min) / 2;
+    if (max === min) return [0, 0, l];
+    const d = max - min;
+    const s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+    let h = 0;
+    if (max === r) h = ((g - b) / d + (g < b ? 6 : 0)) / 6;
+    else if (max === g) h = ((b - r) / d + 2) / 6;
+    else h = ((r - g) / d + 4) / 6;
+    return [h * 360, s, l];
+  }
+
+  function hslToHex(h: number, s: number, l: number): string {
+    h = ((h % 360) + 360) % 360;
+    const c = (1 - Math.abs(2 * l - 1)) * s;
+    const x = c * (1 - Math.abs(((h / 60) % 2) - 1));
+    const m = l - c / 2;
+    let r = 0, g = 0, b = 0;
+    if (h < 60) { r = c; g = x; }
+    else if (h < 120) { r = x; g = c; }
+    else if (h < 180) { g = c; b = x; }
+    else if (h < 240) { g = x; b = c; }
+    else if (h < 300) { r = x; b = c; }
+    else { r = c; b = x; }
+    const toHex = (v: number) => Math.round((v + m) * 255).toString(16).padStart(2, "0");
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`;
+  }
+
+  // Start from the title color hue and spread evenly
+  const [baseHue, baseSat] = hexToHsl(baseColors[0]);
+  const palette: string[] = [];
+  const saturation = Math.max(baseSat, 0.5);
+  const lightness = 0.55;
+
+  for (let i = 0; i < count; i++) {
+    const hue = baseHue + (i * 360) / count;
+    palette.push(hslToHex(hue, saturation, lightness));
+  }
+
+  return palette;
+}
+
 function sanitizeColor(color: string | null): string | null {
   if (!color) return null;
   const hex = color.replace(/^#/, "");

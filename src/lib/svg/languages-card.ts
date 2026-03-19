@@ -1,5 +1,5 @@
 import { LanguageStat } from "@/lib/github/types";
-import { Theme } from "@/lib/themes";
+import { Theme, generateThemePalette } from "@/lib/themes";
 import { renderCard } from "./card";
 import { escapeXml } from "./utils";
 
@@ -12,18 +12,27 @@ interface LanguagesCardOptions {
   borderRadius?: number;
   customWidth?: number;
   customHeight?: number;
+  themeColors?: boolean;
 }
 
 export function renderLanguagesCard(
   languages: LanguageStat[],
   options: LanguagesCardOptions
 ): string {
-  const { theme, hideBorder, hideTitle, layout = "compact", username = "", borderRadius, customWidth, customHeight } = options;
+  const { theme, hideBorder, hideTitle, layout = "compact", username = "", borderRadius, customWidth, customHeight, themeColors } = options;
+
+  // Override language colors with theme-derived palette if requested
+  const langs = themeColors
+    ? (() => {
+        const palette = generateThemePalette(theme, languages.length);
+        return languages.map((lang, i) => ({ ...lang, color: palette[i] }));
+      })()
+    : languages;
 
   if (layout === "normal") {
-    return renderNormalLayout(languages, { theme, hideBorder, hideTitle, username, borderRadius, customWidth, customHeight });
+    return renderNormalLayout(langs, { theme, hideBorder, hideTitle, username, borderRadius, customWidth, customHeight });
   }
-  return renderCompactLayout(languages, { theme, hideBorder, hideTitle, username, borderRadius, customWidth, customHeight });
+  return renderCompactLayout(langs, { theme, hideBorder, hideTitle, username, borderRadius, customWidth, customHeight });
 }
 
 function renderCompactLayout(
