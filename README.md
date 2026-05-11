@@ -1,6 +1,6 @@
 # GitHub Widgets
 
-Self-hosted GitHub stats widgets for your README. Generate beautiful SVG cards showing your GitHub statistics and top programming languages.
+Open-source GitHub stats widgets for your README. Generate beautiful SVG cards showing your GitHub statistics and top programming languages.
 
 ## Preview
 
@@ -17,7 +17,7 @@ Self-hosted GitHub stats widgets for your README. Generate beautiful SVG cards s
 - **Color overrides** — Customize any color via URL parameters
 - **Private repo support** — Include private repos for a configured username
 - **Built-in caching** — In-memory LRU + CDN caching to stay within GitHub rate limits
-- **Self-hosted** — Deploy on your own Vercel account, no third-party dependency
+- **Deploy your own** — Run your own instance on Vercel, no third-party dependency
 
 ## Usage
 

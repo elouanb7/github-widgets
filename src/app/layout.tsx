@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "GitHub Widgets",
-  description: "Self-hosted GitHub stats widgets for your README",
+  description: "Open-source GitHub stats widgets for your README",
 };
 
 export default function RootLayout({

@@ -103,7 +103,7 @@ export default function Home() {
             GitHub Widgets
           </h1>
           <p style={{ color: "#8b949e", fontSize: 16, marginTop: 8 }}>
-            Self-hosted GitHub stats for your README
+            Open-source GitHub stats for your README
           </p>
         </div>
 
@@ -217,10 +217,10 @@ export default function Home() {
                     transition: "all 0.15s",
                   }}
                 >
-                  <div style={{ display: "flex", gap: 3 }}>
-                    <div style={{ width: 12, height: 12, borderRadius: "50%", background: colors.bg, border: "1px solid #484f58" }} />
-                    <div style={{ width: 12, height: 12, borderRadius: "50%", background: colors.accent }} />
-                    <div style={{ width: 12, height: 12, borderRadius: "50%", background: colors.text }} />
+                  <div style={{ display: "flex", gap: 3, alignItems: "center" }}>
+                    <div style={{ width: 12, height: 12, borderRadius: "50%", background: colors.bg, border: "0.5px solid #484f58", boxSizing: "border-box" }} />
+                    <div style={{ width: 12, height: 12, borderRadius: "50%", background: colors.accent, border: "0.5px solid #484f58", boxSizing: "border-box" }} />
+                    <div style={{ width: 12, height: 12, borderRadius: "50%", background: colors.text, border: "0.5px solid #484f58", boxSizing: "border-box" }} />
                   </div>
                   <span style={{ fontSize: 13, color: isSelected ? "#f0f6fc" : "#8b949e", fontWeight: isSelected ? 600 : 400 }}>
                     {t}
@@ -326,7 +326,7 @@ export default function Home() {
         </div>
 
         <div style={{ textAlign: "center", marginTop: 32, color: "#484f58", fontSize: 13 }}>
-          GitHub Widgets — Self-hosted, open source
+          GitHub Widgets — Open source
         </div>
       </div>
     </div>
