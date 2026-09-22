@@ -9,6 +9,19 @@ const THEMES = [
   "aura", "sunset", "ocean", "contributions",
 ];
 
+const COUNTER_STYLES = [
+  "badge", "flap", "segment", "matrix", "cyber", "neon", "minimal", "card",
+] as const;
+type CounterStyle = (typeof COUNTER_STYLES)[number];
+
+// Displays and terminal readouts look right with a fixed width of digits.
+const DEFAULT_PAD: Record<CounterStyle, number> = {
+  badge: 0, flap: 6, segment: 6, matrix: 6, cyber: 6, neon: 0, minimal: 0, card: 0,
+};
+
+const COUNTER_ICONS = ["none", "eye", "user", "pulse", "bolt", "dot"] as const;
+const ICON_STYLES: CounterStyle[] = ["badge", "card", "minimal"];
+
 const THEME_COLORS: Record<string, { bg: string; text: string; accent: string }> = {
   light: { bg: "#ffffff", text: "#434d58", accent: "#2f80ed" },
   dark: { bg: "#0d1117", text: "#c9d1d9", accent: "#58a6ff" },
@@ -39,6 +52,11 @@ export default function Home() {
   const [layout, setLayout] = useState<"compact" | "normal">("compact");
   const [borderRadius, setBorderRadius] = useState(4.5);
   const [themeColors, setThemeColors] = useState(false);
+  const [counterStyle, setCounterStyle] = useState<CounterStyle>("badge");
+  const [counterLabel, setCounterLabel] = useState("Profile views");
+  const [counterPad, setCounterPad] = useState(0);
+  const [counterIcon, setCounterIcon] = useState("eye");
+  const [counterScale, setCounterScale] = useState(1);
   const [baseUrl, setBaseUrl] = useState("https://github-widgets.elouanb7.com");
   const [usersCount, setUsersCount] = useState<number | null>(null);
 
@@ -60,8 +78,20 @@ export default function Home() {
     ? `/api/languages?username=${validUsername}&theme=${theme}&langs_count=${langsCountNum}&layout=${layout}&border_radius=${borderRadius}${themeColors ? "&theme_colors=true" : ""}`
     : "";
 
+  const viewsPath = validUsername
+    // The border radius slider belongs to the cards; each counter style has its own.
+    ? `/api/views?username=${validUsername}&theme=${theme}&style=${counterStyle}` +
+      `${counterLabel !== "Profile views" ? `&label=${encodeURIComponent(counterLabel)}` : ""}` +
+      `&pad=${counterPad}` +
+      `${counterScale !== 1 ? `&scale=${counterScale}` : ""}` +
+      `${ICON_STYLES.includes(counterStyle) ? `&icon=${counterIcon}` : ""}`
+    : "";
+  // The site's own preview must not inflate anyone's counter.
+  const viewsPreviewPath = viewsPath ? `${viewsPath}&increment=false` : "";
+
   const statsImgTag = `<img width="363" src="${baseUrl}${statsPath}" alt="GitHub Stats"/>`;
   const langsImgTag = `<img width="477" src="${baseUrl}${langsPath}" alt="Top Languages"/>`;
+  const viewsImgTag = `<img src="${baseUrl}${viewsPath}" alt="Profile views"/>`;
   const combinedMarkdown = `${statsImgTag} ${langsImgTag}`;
 
   return (
@@ -260,6 +290,111 @@ export default function Home() {
           )}
         </div>
 
+        {/* Views counter */}
+        <div style={{
+          background: "#161b22",
+          border: "1px solid #30363d",
+          borderRadius: 12,
+          padding: 24,
+          marginBottom: 32,
+        }}>
+          <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", margin: "0 0 16px 0" }}>
+            <h2 style={{ fontSize: 16, fontWeight: 600, color: "#f0f6fc", margin: 0 }}>Profile Views Counter</h2>
+            <span style={{ fontSize: 12, color: "#484f58" }}>Previews on this page don&apos;t count as views</span>
+          </div>
+
+          <span style={{ display: "block", fontSize: 13, fontWeight: 500, color: "#8b949e", paddingBottom: 8 }}>Style</span>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginBottom: 20 }}>
+            {COUNTER_STYLES.map((s) => (
+              <button
+                key={s}
+                onClick={() => {
+                  setCounterStyle(s);
+                  setCounterPad(DEFAULT_PAD[s]);
+                  setCounterIcon(s === "badge" ? "eye" : "none");
+                }}
+                style={{
+                  ...pillStyle,
+                  flex: "0 0 auto",
+                  padding: "9px 16px",
+                  background: counterStyle === s ? "#58a6ff" : "#21262d",
+                  color: counterStyle === s ? "#fff" : "#8b949e",
+                  border: counterStyle === s ? "1px solid #58a6ff" : "1px solid #30363d",
+                }}
+              >
+                {s.charAt(0).toUpperCase() + s.slice(1)}
+              </button>
+            ))}
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0 16px" }}>
+            <span style={{ fontSize: 13, fontWeight: 500, color: "#8b949e", paddingBottom: 8 }}>Label</span>
+            <span style={{ fontSize: 13, fontWeight: 500, color: "#8b949e", paddingBottom: 8 }}>{`Size: ${counterScale}x`}</span>
+            <span style={{ fontSize: 13, fontWeight: 500, color: "#8b949e", paddingBottom: 8 }}>{`Zero Padding: ${counterPad === 0 ? "off" : counterPad}`}</span>
+
+            <input
+              value={counterLabel}
+              onChange={(e) => setCounterLabel(e.target.value)}
+              placeholder="Profile views"
+              style={inputStyle}
+            />
+            <div style={{ display: "flex", alignItems: "center", height: 42 }}>
+              <input
+                type="range"
+                min={0.5}
+                max={3}
+                step={0.1}
+                value={counterScale}
+                onChange={(e) => setCounterScale(parseFloat(e.target.value))}
+                style={{ width: "100%", accentColor: "#58a6ff" }}
+              />
+            </div>
+            <div style={{ display: "flex", alignItems: "center", height: 42 }}>
+              <input
+                type="range"
+                min={0}
+                max={10}
+                value={counterPad}
+                onChange={(e) => setCounterPad(parseInt(e.target.value, 10))}
+                style={{ width: "100%", accentColor: "#58a6ff" }}
+              />
+            </div>
+          </div>
+
+          {ICON_STYLES.includes(counterStyle) && (
+            <div style={{ marginTop: 16 }}>
+              <span style={{ display: "block", fontSize: 13, fontWeight: 500, color: "#8b949e", paddingBottom: 8 }}>Icon</span>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                {COUNTER_ICONS.map((i) => (
+                  <button
+                    key={i}
+                    onClick={() => setCounterIcon(i)}
+                    style={{
+                      ...pillStyle,
+                      flex: "0 0 auto",
+                      padding: "8px 14px",
+                      background: counterIcon === i ? "#58a6ff" : "#21262d",
+                      color: counterIcon === i ? "#fff" : "#8b949e",
+                      border: counterIcon === i ? "1px solid #58a6ff" : "1px solid #30363d",
+                    }}
+                  >
+                    {i}
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: 96, padding: "28px 0 8px" }}>
+            {!validUsername ? (
+              <span style={{ color: "#484f58" }}>Enter a GitHub username above to see the preview</span>
+            ) : (
+              /* eslint-disable-next-line @next/next/no-img-element */
+              <img src={viewsPreviewPath} alt="Profile views" />
+            )}
+          </div>
+        </div>
+
         {/* Markdown */}
         {validUsername && (
           <div style={{
@@ -274,6 +409,7 @@ export default function Home() {
               <CodeBlock label="Both Cards (side by side)" code={combinedMarkdown} />
               <CodeBlock label="Stats Card only" code={statsImgTag} />
               <CodeBlock label="Languages Card only" code={langsImgTag} />
+              <CodeBlock label="Profile Views Counter" code={viewsImgTag} />
             </div>
           </div>
         )}
@@ -313,6 +449,15 @@ export default function Home() {
                   ["theme_colors", "false", "Use theme-derived colors for languages"],
                   ["width", "", "Override card width in pixels (100-1000)"],
                   ["height", "", "Override card height in pixels (50-1000)"],
+                  ["style", "badge", "Views counter: badge, flap, segment, matrix, cyber, neon, minimal or card"],
+                  ["size", "md", "Views counter: sm, md, lg or xl"],
+                  ["scale", "1", "Views counter: exact size multiplier (0.4-4)"],
+                  ["icon", "eye / none", "Views counter: none, eye, user, pulse, bolt or dot"],
+                  ["label", "Profile views", "Views counter label"],
+                  ["pad", "0", "Views counter: zero-pad the number (0-12)"],
+                  ["abbreviate", "false", "Views counter: show 1.2k instead of 1234"],
+                  ["offset", "0", "Views counter: add a starting value"],
+                  ["dedupe", "5", "Views counter: seconds before the same fetcher counts again"],
                 ].map(([param, def, desc]) => (
                   <tr key={param} style={{ borderBottom: "1px solid #21262d" }}>
                     <td style={{ padding: "10px 12px", fontFamily: "monospace", color: "#58a6ff" }}>{param}</td>

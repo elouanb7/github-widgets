@@ -207,6 +207,26 @@ export function generateThemePalette(theme: Theme, count: number): string[] {
   return palette;
 }
 
+function parseHex(hex: string): [number, number, number] {
+  let h = hex.replace(/^#/, "");
+  if (h.length < 6) h = h.slice(0, 3).split("").map((c) => c + c).join("");
+  h = h.padEnd(6, "0").slice(0, 6);
+  const n = parseInt(h, 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+
+/**
+ * Lighten a dark color / darken a light one, for surfaces sitting on top of the
+ * card background (flap tiles, panels) that must stay readable in every theme.
+ */
+export function elevate(hex: string, amount = 0.08): string {
+  const [r, g, b] = parseHex(hex);
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  const target = luminance < 0.5 ? 255 : 0;
+  const mix = (c: number) => Math.round(c + (target - c) * amount);
+  return `#${[mix(r), mix(g), mix(b)].map((c) => c.toString(16).padStart(2, "0")).join("")}`;
+}
+
 function sanitizeColor(color: string | null): string | null {
   if (!color) return null;
   const hex = color.replace(/^#/, "");

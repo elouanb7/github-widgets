@@ -35,7 +35,7 @@ export function renderCard(options: CardOptions, body: string): string {
     .stat-label { font-size: 14px; font-weight: 400; fill: ${theme.textColor}; }
     .stat-value { font-size: 14px; font-weight: 700; fill: ${theme.textColor}; }
     .lang-name { font-size: 12px; font-weight: 400; fill: ${theme.textColor}; }
-    .icon { fill: ${theme.iconColor}; }
+    .icon { fill: ${theme.iconColor}; color: ${theme.iconColor}; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     .fade-in { animation: fadeIn 0.3s ease-in-out forwards; }
   </style>
