@@ -71,7 +71,9 @@ function shell(options: {
   body: string;
   defs?: string;
 }): string {
-  const { width, height, title, css, body, defs } = options;
+  const { title, css, body, defs } = options;
+  const width = r(options.width);
+  const height = r(options.height);
   return `<svg width="${width}" height="${height}" viewBox="0 0 ${width} ${height}" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title" text-rendering="geometricPrecision">
   <title id="title">${escapeXml(title)}</title>${defs ? `
   <defs>${defs}</defs>` : ""}
